@@ -1,17 +1,40 @@
 import torch
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
+from generate_sentence import Sentence
+import pygame
 
-# initialize tokenizer and model from pretrained GPT2 model
-tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
-model = GPT2LMHeadModel.from_pretrained('gpt2')
 
-sequence = ("He began his premiership by forming a five-man war cabinet which included Chamerlain as Lord President "
-            "of the Council, Labour leader Clement Attlee as Lord Privy Seal (later as Deputy Prime Minister), "
-            "Halifax as Foreign Secretary and Labour's Arthur Greenwood as a minister without portfolio.")
-inputs = tokenizer.encode(sequence, return_tensors='pt')
+class Interface:
+    SCREEN_WIDTH: int = 1000
+    SCREEN_HEIGHT: int = 800
+    text: str = 'test'
+    white = (255, 255, 255)
+    def __init__(self):
+        pygame.init()
+        self.screen = pygame.display.set_mode(
+            (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+        self.font = pygame.font.SysFont(pygame.font.get_default_font(), 72)
+        fonts = pygame.font.get_fonts()
+        print(len(fonts))
+        for f in fonts:
+            print(f)
+        self.color = pygame.Color('green')
+        pygame.display.flip()
 
-outputs = model.generate(
-    inputs, max_length=200, do_sample=True, temperature=5.0, top_k=50
-)
-text = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
+    def render(self):
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+
+
+            text_surface = self.font.render(self.text, True, self.color)
+            self.screen.blit(text_surface, (50, 100))
+            pygame.display.update()
+
+
+screen = Interface()
+screen.render()
+print('aa')
