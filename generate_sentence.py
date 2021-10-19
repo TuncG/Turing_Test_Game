@@ -8,10 +8,12 @@ class Sentence:
     """
     question: str
 
-    def init(self, temp_ques: str):
-        self.question = temp_ques
+    def init(self):
+        self.question = ' '
+        pass
 
-    def generate_response(self):
+    def generate_response(self, temp_ques):
+        self.question = temp_ques
         tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
         model = GPT2LMHeadModel.from_pretrained('gpt2')
 
@@ -23,3 +25,7 @@ class Sentence:
         text = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
         return text
+
+#sent = Sentence
+#a = sent.generate_response(sent,"What is your name?")
+#print(a)
