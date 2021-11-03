@@ -7,7 +7,6 @@ class Interface:
     SCREEN_WIDTH: int = 800
     SCREEN_HEIGHT: int = 600
     text: str = ' '
-    response: str = ' '
     white = (255, 255, 255)
 
 
@@ -15,7 +14,7 @@ class Interface:
         pygame.init()
         self.screen = pygame.display.set_mode(
             (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-        self.font = pygame.font.SysFont(pygame.font.get_default_font(), 50)
+        self.font = pygame.font.SysFont(pygame.font.get_default_font(), 30)
 
         fonts = pygame.font.get_fonts()
         self.input_box = pygame.Rect(100, 450, 205, 50)
@@ -81,9 +80,10 @@ class Interface:
                             self.text += event.unicode
 
             text_surface = self.font.render(self.text, True, 'green')
-            response_text = self.font.render(self.response, True, 'green')
+            text_surface2 = self.font.render(temp_question,True, 'red')
             self.screen.blit(text_surface, (105, 450))
-            self.screen.blit(response_text, (250, 450))
+            self.screen.blit(text_surface2, (150, 120))
+
             pygame.draw.rect(self.screen,'black',self.input_box,2)
             pygame.draw.line(self.screen, self.color2, (100, 450), (100, 500))
             pygame.display.update()
@@ -91,4 +91,4 @@ class Interface:
 
 screen = Interface()
 screen.render()
-print('aa')
+

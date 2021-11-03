@@ -31,7 +31,11 @@ class Sentence:
 
         outputs = model.generate(inputs, max_length=length, do_sample=True, temperature=0.5, top_k=40)
         text = tokenizer.decode(outputs[0], skip_special_tokens=True)
-        return text[length_input:]
+        print(text)
+        if self.question[-1] == '?':
+            text = text[length_input+1:]
+        text = text.strip()
+        return text
 
 
 # sent = Sentence
