@@ -17,15 +17,23 @@ class Sentence:
         tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
         model = GPT2LMHeadModel.from_pretrained('gpt2')
 
+        length = 15
         sequence = self.question
+        length_input = len(sequence)
+        temp = self.question.split()
+
+        if len(temp) >= 5:
+            length = 20
+        if len(temp) > 10:
+            length = 25
 
         inputs = tokenizer.encode(sequence, return_tensors='pt')
 
-        outputs = model.generate(inputs, max_length=200, do_sample=True, temperature=5.0, top_k=50)
+        outputs = model.generate(inputs, max_length=length, do_sample=True, temperature=0.5, top_k=40)
         text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        return text[length_input:]
 
-        return text
 
-#sent = Sentence
-#a = sent.generate_response(sent,"What is your name?")
-#print(a)
+# sent = Sentence
+# a = sent.generate_response(sent,"What is your name?")
+# print(a)
